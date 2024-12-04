@@ -1,30 +1,29 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Optional;
+
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
     public static void main(String[] args) {
 
-        Optional album = getAlbum("Random Access Memories");
-        if(album.isPresent()){
-            System.out.println("Se encontró el album");
-        }else{
-            System.out.println("No se encontró :(");
-        }
+        LocalDate fecha = LocalDate.of(2020, Month.NOVEMBER,16);
+        LocalTime hora = LocalTime.of(4,15);
+        LocalDateTime fechaHora = LocalDateTime.of(fecha,hora);
+        System.out.println(fechaHora);
+
+        fechaHora = fechaHora.minusHours(1);
+        System.out.println(fechaHora);
+
+        Period duracion = Period.ofDays(1);
+        fechaHora = fechaHora.minus(duracion);
+        //Opción 1 de formateo
+        //DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+        //Opción 2 de formateo
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+        System.out.println(formatter.format(fechaHora));
 
     }
 
-    private static Optional<Album> getAlbum(String nombre) {
-        HashMap lista = new HashMap<>();
-        lista.put("Thriller",new Album("Thriller","Michael Jackson","Epic Records"));
-        lista.put("Pasadena",new Album("Pasadena","Guns N Roses","Epic Records"));
-        lista.put("Meteora",new Album("Meteora","Linkin park","Epic Records"));
-        Optional album = Optional.empty();
-        if(lista.containsKey(nombre)){
-            album = Optional.of(lista.get(nombre));
-        }
-        return album;
-    }
 
 }
